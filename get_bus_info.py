@@ -2,6 +2,9 @@
 Created on Sep 21, 2015
 
 @author: cmp670
+
+GX5003 Sec. 001
+Solution to Homework 2 Problem 2
 '''
 
 import sys
@@ -11,9 +14,24 @@ import csv
 
 if __name__ == '__main__':
     #Get command line arguments; make BusLine upper case.
-    APIKey = sys.argv[1]
-    BusLine = sys.argv[2].upper()
-    FName = sys.argv[3]
+    try:
+        APIKey = sys.argv[1]
+        BusLine = sys.argv[2].upper()
+    except IndexError:
+        print 'This python script requires at least two arguments on the' \
+              'command line:\n' \
+              '    APIKey    Your personal API Key issued by the MTA\n' \
+              '    BusLine   The line number of the MTA Bus to query\n' \
+              'Optionally, you may also call a third argument:\n' \
+              '    FName     The name of the csv file you wish to save.\n' \
+              '              (defaults to [BusLine].csv if not given)\n' \
+              'Please call this script again using at least two arguments.'
+        raise
+    #Get third argument and set Fname, or assign name if argument not present.
+    try:
+        FName = sys.argv[3]
+    except IndexError:
+        FName = BusLine + '.csv'
 
     #Set url for JSON request of MTA BusTime data using key and line inputs
     url = 'http://api.prod.obanyc.com/api/siri/vehicle-monitoring.json?' \
