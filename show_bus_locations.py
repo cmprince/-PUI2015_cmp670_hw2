@@ -37,20 +37,22 @@ if __name__ == '__main__':
     #If the line number is invalid, nd4 ('VehicleActivity') won't be
     #present, so test for KeyError here.
     try:
-        myroot = busdata[nd1][nd2][nd3][0][nd4]
+        buses = busdata[nd1][nd2][nd3][0][nd4]
     except KeyError:
         print 'Could not find data for line %s. Please verify the line number.'\
                 %BusLine
         raise
 
     print 'Bus Line: %s' %BusLine
-    print 'Number of active buses: %s' %len(myroot)
+    print 'Number of active buses: %s' %len(buses)
 
-    #Loop through list in myroot (one per bus) and display their 
+    #Loop through list items in buses (one per bus) and display their 
     #IDs and locations:
-    for i in range(len(myroot)):
-        busID = myroot[i][nd5][nd6a]
-        busLat = myroot[i][nd5][nd6b][nd7a]
-        busLon = myroot[i][nd5][nd6b][nd7b]
+    i = 1
+    for bus in buses:
+        busID = bus[nd5][nd6a]
+        busLat = bus[nd5][nd6b][nd7a]
+        busLon = bus[nd5][nd6b][nd7b]
         print '%i: Bus ID %s is at latitude %s and longitude %s.' \
-                %(i+1, busID, busLat, busLon)
+                %(i, busID, busLat, busLon)
+        i += 1
